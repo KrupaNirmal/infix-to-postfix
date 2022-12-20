@@ -1,0 +1,64 @@
+//program to convert infix to postfix// 
+
+#include<stdio.h>//standard input output header file// 
+#include<stdlib.h> 
+#include<ctype.h>//declaring the stack size// 
+char stack[20];//declaring the initial value if top is-1// 
+int top=-1; 
+void push(char x)//push function// 
+{ 
+     stack [++top]=x; 
+} 
+char pop()//pop function// 
+{ 
+     if(top==-1) 
+     return-1; 
+     else 
+     return stack[top--]; 
+} 
+
+int priority(char x)//priority function// 
+{ 
+    if(x=='(')//if the value of x is (then return to 0// 
+    return 0; 
+    if(x=='+'||x=='-')//if the value of x is + or - then return to 1// 
+    return 1; 
+    if(x=='*'||x=='/')//if the value of x is * or / then return to 2// 
+    return 2; 
+    return 0; 
+} 
+
+int main()//main function// 
+{ 
+     char expression[20]; 
+     char *e,x; 
+     printf("enter the expression\n");//displaying the expression// 
+     scanf("%s",expression); 
+     e=expression;//intilizaing the value of e to the exp// 
+     while(*e!='\0')//checks the condition// 
+    { 
+         if(isalnum(*e)) 
+         printf("%c",*e); 
+         else if(*e=='(') 
+         push(*e);//checks the condition of else if  and pushes the element// 
+         else if(*e==')') 
+         { 
+         while((x=pop())!='(') 
+         printf("%c",x); 
+         } 
+         else 
+         { 
+         while(priority(stack[top])>=priority(*e))// checks the condition// 
+         printf("%c",pop()); 
+         push(*e); 
+         } 
+      e++;//incrementetion of e by 1// 
+  } 
+     while(top!=-1)//conditions checks// 
+           { 
+           printf("%c",pop()); 
+           } 
+
+printf("/n"); 
+return 0;//terminates the program// 
+} 
